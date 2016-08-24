@@ -69,6 +69,7 @@ $("#userInput").submit(function(event) {
 
   $("#roll").click(function() {
     var roll = Math.floor(Math.random() * 6) + 1;
+    var roll2 = Math.floor(Math.random() * 6) + 1;
 
     Player.prototype.roll = function() {
       if (roll > 1) {
@@ -85,15 +86,53 @@ $("#userInput").submit(function(event) {
         this.activeSwitch();
       }
     };
-
-    $(".lastNumber").text(roll)
-    $(".sorry").text("")
-    if (player1.active) {
-      player1.roll();
-    }
-    else if (player2.active) {
-      player2.roll();
+    Player.prototype.twoDice = function() {
+      if ((roll > 1) && (roll2 > 1)) {
+        this.turnTotal += roll
+        this.turnTotal += roll2
+        $(".rolledNumbers").append((roll + roll2) + ", ");
+        $("#turnTotal").text(this.turnTotal);
+      }
+      else if ((roll === 1) && (roll2 === 1)) {
+        this.gameTotal = 0;
+        alert("Oh no! You rolled 2 ones! You've lost all your points for this game so far.")
+        this.turnTotal = 0
+        $("#turnTotal").text(this.turnTotal)
+        $("#gameTotal1").text(player1.gameTotal);
+        $("#gameTotal2").text(player2.gameTotal);
+        $(".lastNumber").text(0)
+        $(".rolledNumbers").empty();
+        this.activeSwitch();
+      }
+      else if ((roll === 1) || (roll2 === 1)) {
+        $(".lastNumber").text(0)
+        this.turnTotal = 0
+        $(".rolledNumbers").empty();
+        $("#turnTotal").text(this.turnTotal)
+        alert("Sorry, you rolled a '1'. Now it is the other player's turn!")
+        this.activeSwitch();
+      }
     };
+
+    if (!($("input:checked"))) {
+      $(".lastNumber").text(roll)
+      if (player1.active) {
+        player1.roll();
+      }
+      else if (player2.active) {
+        player2.roll();
+      };
+    }
+    else {
+      $(".lastNumber").text(roll + ", " + roll2)
+      if (player1.active) {
+        player1.twoDice();
+      }
+      else if (player2.active) {
+        player2.twoDice();
+      };
+    }
+
   });
 
   $("#hold").click(function() {
