@@ -77,10 +77,11 @@ $("#userInput").submit(function(event) {
         $("#turnTotal").text(this.turnTotal);
       }
       else if (roll === 1) {
+        $(".lastNumber").text(0)
         this.turnTotal = 0
         $(".rolledNumbers").empty();
         $("#turnTotal").text(this.turnTotal)
-        $(".sorry").text("Sorry, you rolled a '1'. Now it is the other player's turn!")
+        alert("Sorry, you rolled a '1'. Now it is the other player's turn!")
         this.activeSwitch();
       }
     };
