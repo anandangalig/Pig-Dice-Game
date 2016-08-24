@@ -1,58 +1,115 @@
 // Back-end logic
 function Player(name, turnTotal, gameTotal) {
+  this.win = false;
   this.active = false;
   this.name = name;
   this.turnTotal = turnTotal;
   this.gameTotal = gameTotal;
 };
 
-  // Front-End Logis:
+var player1 = new Player("", 0, 0)
+var player2 = new Player("", 0, 0)
+
+  // Front-End Logic:
 $("#userInput").submit(function(event) {
   event.preventDefault();
 
+  $("#gameTotal1").text(0)
+  $("#gameTotal2").text(0)
+
   var player1Name = $("#player1Name").val();
   var player2Name = $("#player2Name").val();
-  console.log(player1Name + " " + player2Name)
-
-
+  $(".displayName1").text(player1Name)
+  $(".displayName2").text(player2Name)
 
   var player1 = new Player(player1Name, 0, 0)
     player1.active = true;
   var player2 = new Player(player2Name, 0, 0)
-  console.log(player1);
-  console.log(player2);
-  $(".whoseTurn").text(player1.name)
+
+  var roll = 0;
+  console.log(player1.gameTotal)
+
+  // Start Prototypes
 
   Player.prototype.activeSwitch = function() {
-    if (player1.active === false) {
-      player1.active = true
-      player2.active = false
-      $(".whoseTurn").text(player1.name)
-    }
-    else {
+    if (player1.active) {
       player1.active = false
       player2.active = true
       $(".whoseTurn").text(player2.name)
     }
+    else {
+      player1.active = true
+      player2.active = false
+      $(".whoseTurn").text(player1.name)
+    }
   };
-  $(".gameArea").show();
 
+  Player.prototype.hold = function() {
+    $(".rolledNumbers").empty();
+    this.gameTotal += this.turnTotal
+    this.turnTotal = 0
+    this.checkWin();
+    this.activeSwitch();
+  }
+
+  Player.prototype.checkWin = function() {
+    if (this.gameTotal >= 100) {
+      alert(this.name + " is the winner!!")
+      player1.gameTotal = 0;
+      player2.gameTotal = 0;
+      $("#gameTotal1").text(0)
+      $("#gameTotal2").text(0)
+    }
+  }
+
+// End Prototypes
+
+  $(".whoseTurn").text(player1.name)
+  $(".gameArea").show();
 
   $("#roll").click(function() {
     var roll = Math.floor(Math.random() * 6) + 1;
-    $(".lastNumber").text(roll)
-    if (roll > 1) {
-      player1.turnTotal += roll
-      $("#turnTotal1").text(player1.turnTotal)
-    }
-    else if (roll === 1) {
-      player1.activeSwitch()
-      player1.turnTotal = 0
-      $("#turnTotal1").text(player1.turnTotal)
-      $(".sorry").text("Sorry, you rolled a '1'. Now it is the other player's turn!")
-    }
 
-    console.log(player1.active)
-    console.log(player2.active)
+    Player.prototype.roll = function() {
+      if (roll > 1) {
+        this.turnTotal += roll
+        $(".rolledNumbers").append(roll + ", ");
+        $("#turnTotal").text(this.turnTotal);
+      }
+      else if (roll === 1) {
+        this.turnTotal = 0
+        $(".rolledNumbers").empty();
+        $("#turnTotal").text(this.turnTotal)
+        $(".sorry").text("Sorry, you rolled a '1'. Now it is the other player's turn!")
+        this.activeSwitch();
+      }
+    };
+
+    $(".lastNumber").text(roll)
+    $(".sorry").text("")
+    if (player1.active) {
+      player1.roll();
+    }
+    else if (player2.active) {
+      player2.roll();
+    };
+  });
+
+  $("#hold").click(function() {
+    $(".sorry").text("")
+    if (player1.active) {
+      player1.hold();
+      $("#gameTotal1").text(player1.gameTotal)
+      $("#turnTotal").text(player1.turnTotal)
+      $(".lastNumber").text(0)
+
+    }
+    else if (player2.active) {
+      player2.hold();
+      $("#gameTotal2").text(player2.gameTotal)
+      $("#turnTotal").text(player2.turnTotal)
+      $(".lastNumber").text(0)
+    }
   })
+
 });
