@@ -22,7 +22,16 @@ $("#userInput").submit(function(event) {
   $("#roll1").click(function() {
     var roll = Math.floor(Math.random() * 6) + 1;
     $(".lastNumber").text(roll)
-    player1.turnTotal += roll
-    console.log(player1.turnTotal)
+    if (roll > 1) {
+      player1.turnTotal += roll
+      $("#turnTotal1").text(player1.turnTotal)
+    }
+    else if (roll === 1) {
+      player1.turnTotal = 0
+      $("#turnTotal1").text(player1.turnTotal)
+      $(".sorry").text("Sorry, you rolled a '1'. Now it is the other player's turn!")
+    }
+
+
   })
 })
