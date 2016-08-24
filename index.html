@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pig Dice</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center">Let's Play Pig Dice!</h1>
+      <form id="userInput">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="player1Name">Player 1 Name:</label>
+              <input type="text" class="form-control" id="player1Name" required>
+            </div>
+            <div class="form-group">
+              <label for="wager1">Wager:</label>
+              <div class="input-group">
+                <div class="input-group-addon">$</div>
+                <input type="text" class="form-control" id="wager1" placeholder="Amount">
+                <div class="input-group-addon">.00</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label for="player2Name">Player 2 Name:</label>
+              <input type="text" class="form-control" id="player2Name" required>
+            </div>
+            <div class="form-group">
+              <label for="wager2">Wager:</label>
+              <div class="input-group">
+                <div class="input-group-addon">$</div>
+                <input type="text" class="form-control" id="wager2" placeholder="Amount">
+                <div class="input-group-addon">.00</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <button class="btn btn-success btn-lg center-block" type="submit">Start new Game</button>
+      </form>
+
+<!-- The game display sectio is below: -->
+    <div class="gameArea">
+      <hr>
+      <h3 class="text-center">It is <span class="whoseTurn"></span>'s turn.</h3>
+
+      <h2 class="text-center"><span class="lastNumber"></span></h2>
+      <p class="rolledNumbers text-center"></p>
+      <hr>
+      <div class="row">
+        <div class="col-sm-6">
+          <h2>Player 1 : <span class=" displayName1"></span></h2>
+          <h4>Turn Total: <span id="turnTotal1"></span></h4>
+          <h4>Game Total: <span id="gameTotal1"></span></h4>
+          <button id="roll1" class="btn btn-info">Roll The Die!</button>
+          <button id="hold1" class="btn btn-danger" disabled="disabled">Hold</button>
+        </div>
+
+
+        <div class="col-sm-6">
+          <h2>Player 2 : <span class=" displayName2"></span></h2>
+          <h4>Turn Total: <span id="turnTotal2"></span></h4>
+          <h4>Game Total: <span id="gameTotal2"></span></h4>
+          <button id="roll1" class="btn btn-info" disabled="disabled">Roll The Die!</button>
+          <button id="hold1" class="btn btn-danger" disabled="disabled">Hold</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-3.1.0.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
